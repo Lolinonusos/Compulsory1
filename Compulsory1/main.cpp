@@ -180,10 +180,9 @@ void DArray::selectionSort(int* arr, int n)
 			if (arr[j] < arr[minIndex]) {
 				minIndex = j;
 			}
-
-			if (minIndex != i) {
-				swap(&arr[minIndex], &arr[i]);
-			}
+		}
+		if (minIndex != i) {
+			swap(&arr[minIndex], &arr[i]);
 		}
 	}
 }
@@ -219,6 +218,7 @@ int main() {
 	//Ayy1.removeAt(1);
 	
 	Ayy1.addValue(69);
+	Ayy1.addValue(34);
 
 	std::cout << "\nChecking all elements: " << std::endl;
 
@@ -232,7 +232,6 @@ int main() {
 	for (int i = 0; i < Ayy1.retSize(); i++) {
 		std::cout << Ayy1.arrey[i]<< std::endl;
 	}
-	
 	
 	return 0;
 }
