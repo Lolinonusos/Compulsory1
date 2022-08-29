@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 // Add elements to the array - done!
 // Remove elements from the array - done?
@@ -37,12 +36,23 @@ public:
 	int linearSearchArray(int* arr, int N, int x);
 	void binarySearchArray(int l, int r, int x);
 
+	
 	void selectionSort(int* arr, int n);
+	void swap(int* xp, int* yp);
+
+	
 	void bubbleSort(int* arr, int n);
+
+	
 	void mergeSort(int* arr, const int begin, const int end);
+
+	
 	void quickSort(int* arr, int low, int high);
+
+	
 	void heapSort(int* arr, int N);
 
+	
 	// return current size of arrey
 	int retSize();
 	
@@ -163,20 +173,25 @@ void DArray::selectionSort(int* arr, int n)
 	for (int i = 0; i < n-1; i++) {
 
 		int minIndex = i;
-
-
+		
 		// Find element of lowest value
-		for (int j; j < n; j++) {
+		for (int j = i +1; j < n; j++) {
 
 			if (arr[j] < arr[minIndex]) {
 				minIndex = j;
 			}
 
 			if (minIndex != i) {
-				// Swap(&arr[minIndex], &arr[i]);
+				swap(&arr[minIndex], &arr[i]);
 			}
 		}
 	}
+}
+
+void DArray::swap(int* xp, int* yp) {
+	int temp_arrey = *xp;
+	*xp = *yp;
+	*yp = temp_arrey;
 }
 
 
@@ -197,22 +212,26 @@ int main() {
 	// insert values
 	Ayy1.addValue(10);
 	Ayy1.addValue(7);
-	
-	Ayy1.removeAt(1);
+	Ayy1.addValue(100);
+	Ayy1.addValue(1);
+	Ayy1.addValue(20);
+
+	//Ayy1.removeAt(1);
 	
 	Ayy1.addValue(69);
 
 	std::cout << "\nChecking all elements: " << std::endl;
-	for (int i = 0; i < Ayy1.retSize(); i++) {
-		std::cout << Ayy1.arrey[i]<< std::endl;
-	}
 
 	int x = 10;
 
 	// linear search
 	std::cout << "Element " << x << " is at index " << Ayy1.linearSearchArray(Ayy1.arrey, Ayy1.retSize(), x) << std::endl;
 	
+	Ayy1.selectionSort(Ayy1.arrey, Ayy1.retSize());
 
+	for (int i = 0; i < Ayy1.retSize(); i++) {
+		std::cout << Ayy1.arrey[i]<< std::endl;
+	}
 	
 	
 	return 0;
