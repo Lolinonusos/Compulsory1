@@ -9,7 +9,7 @@
 	// Binary Search
 
 // Use 4 of the sorting algorithms
-	// Selection Sort
+	// Selection Sort - functioning
 	// Bubble Sort
 	// Merge Sort
 	// Quick Sort
@@ -38,14 +38,14 @@ public:
 
 	
 	void selectionSort(int* arr, int n);
-	void swap(int* xp, int* yp);
+	void selectionSwap(int* xp, int* yp);
 
 	
 	void bubbleSort(int* arr, int n);
-
+	void bubbleSwap(int* arr, int j);
 	
 	void mergeSort(int* arr, const int begin, const int end);
-
+	void merge(int* arr, const int begin, const int middle, const int end);
 	
 	void quickSort(int* arr, int low, int high);
 
@@ -55,6 +55,8 @@ public:
 	
 	// return current size of arrey
 	int retSize();
+
+	void printArrey(int* arr);
 	
 	~DArray();
 	
@@ -75,8 +77,6 @@ DArray::DArray() {
 
 // Adds value at the end of the array
 void DArray::addValue(int value) {
-
-	// 
 	if (this->arreySize < this->capacity) {
 		std::cout << "Adding value without problem\n" << std::endl;
 		this->arrey[arreySize] = value;
@@ -90,8 +90,6 @@ void DArray::addValue(int value) {
 		std::cout << this->arrey[arreySize] << std::endl;
 		arreySize += 1;
 	}
-
-
 }
 
 
@@ -155,42 +153,93 @@ int DArray::linearSearchArray(int* arr, int N, int x) {
 
 	for (int i = 0; i < N; i++) {
 		if (arr[i] == x) {
+			// std::cout << "Element " << x << " is at index " << i << std::endl;
 			return i;
 		}
 	}
+	// std::cout << "Element " << x << " could not be found in the array" << std::endl;
 	//return;
 }
 
 
-//void DArray::binarySearchArray(int searchIndex) {
+void DArray::binarySearchArray(int l, int r, int x) {
 	
-//}
+}
 
 
 void DArray::selectionSort(int* arr, int n)
 {
-	
-	for (int i = 0; i < n-1; i++) {
 
+	// Loops through the array
+	for (int i = 0; i < n-1; i++) {
 		int minIndex = i;
 		
 		// Find element of lowest value
 		for (int j = i +1; j < n; j++) {
-
+			// Keeps track of current lowest element
 			if (arr[j] < arr[minIndex]) {
 				minIndex = j;
 			}
 		}
+		// Swaps positions of elements
 		if (minIndex != i) {
-			swap(&arr[minIndex], &arr[i]);
+			selectionSwap(&arr[minIndex], &arr[i]);
+		}
+	}
+}
+void DArray::selectionSwap(int* xp, int* yp) {
+	int temp_arrey = *xp;
+	*xp = *yp;
+	*yp = temp_arrey;
+}
+
+
+void DArray::bubbleSort(int* arr, int n) {
+	
+	//bool swapped;
+	for(int i = 0; i < n; i++) {
+
+		//swapped = false;
+
+		for(int j = 0; j < n - i - 1; j++) {
+			if (arr[j] > arr[j + 1]) {
+				//swapped = true;
+				//bubbleSwap(arr, j);
+				selectionSwap(&arr[j], &arr[j + 1]);
+		
+			}
 		}
 	}
 }
 
-void DArray::swap(int* xp, int* yp) {
-	int temp_arrey = *xp;
-	*xp = *yp;
-	*yp = temp_arrey;
+
+void DArray::mergeSort(int* arr, const int begin, const int end) {
+
+	if (begin > end) {
+		return;
+	}
+	
+	auto middle = (begin + end) / 2;
+	
+	mergeSort(arr, begin, middle);
+	mergeSort(arr, middle + 1, end);
+	// merge(arr, begin, middle, end);
+	
+	
+}
+
+void DArray::merge(int* arr, const int begin, const int middle, const int end) {
+	
+}
+
+
+void DArray::quickSort(int* arr, int low, int high) {
+	
+}
+
+
+void DArray::heapSort(int* arr, int N) {
+	
 }
 
 
@@ -225,10 +274,13 @@ int main() {
 	int x = 10;
 
 	// linear search
+	
+	//Ayy1.selectionSort(Ayy1.arrey, Ayy1.retSize());
+	Ayy1.bubbleSort(Ayy1.arrey, Ayy1.retSize());
+	Ayy1.mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
+	
 	std::cout << "Element " << x << " is at index " << Ayy1.linearSearchArray(Ayy1.arrey, Ayy1.retSize(), x) << std::endl;
 	
-	Ayy1.selectionSort(Ayy1.arrey, Ayy1.retSize());
-
 	for (int i = 0; i < Ayy1.retSize(); i++) {
 		std::cout << Ayy1.arrey[i]<< std::endl;
 	}
