@@ -1,4 +1,5 @@
 #include <iostream>
+#include "sorters.h"
 
 // Add elements to the array - done!
 // Remove elements from the array - done?
@@ -10,9 +11,9 @@
 
 // Use 4 of the sorting algorithms
 	// Selection Sort - functioning
-	// Bubble Sort
+	// Bubble Sort - functioning
 	// Merge Sort
-	// Quick Sort
+	// Quick Sort - functioning
 	// Heap Sort
 
 class DArray {
@@ -36,19 +37,17 @@ public:
 	int linearSearchArray(int* arr, int N, int x);
 	void binarySearchArray(int l, int r, int x);
 
-	
-	void selectionSort(int* arr, int n);
-	void selectionSwap(int* xp, int* yp);
+	void swap(int* xp, int* yp);
 
+	void selectionSort(int* arr, int n);
 	
 	void bubbleSort(int* arr, int n);
-	void bubbleSwap(int* arr, int j);
 	
 	void mergeSort(int* arr, const int begin, const int end);
 	void merge(int* arr, const int begin, const int middle, const int end);
 	
-	void quickSort(int* arr, int low, int high);
-
+	void quickSort(int* arr, int begin, int end);
+	int partition(int* arr, int begin, int end);
 	
 	void heapSort(int* arr, int N);
 
@@ -170,6 +169,8 @@ void DArray::binarySearchArray(int l, int r, int x) {
 void DArray::selectionSort(int* arr, int n)
 {
 
+	std::cout << "Selection sorting \n" << std::endl;
+
 	// Loops through the array
 	for (int i = 0; i < n-1; i++) {
 		int minIndex = i;
@@ -183,11 +184,11 @@ void DArray::selectionSort(int* arr, int n)
 		}
 		// Swaps positions of elements
 		if (minIndex != i) {
-			selectionSwap(&arr[minIndex], &arr[i]);
+			swap(&arr[minIndex], &arr[i]);
 		}
 	}
 }
-void DArray::selectionSwap(int* xp, int* yp) {
+void DArray::swap(int* xp, int* yp) {
 	int temp_arrey = *xp;
 	*xp = *yp;
 	*yp = temp_arrey;
@@ -195,6 +196,8 @@ void DArray::selectionSwap(int* xp, int* yp) {
 
 
 void DArray::bubbleSort(int* arr, int n) {
+
+	std::cout << "Bubble sorting \n" << std::endl;
 	
 	//bool swapped;
 	for(int i = 0; i < n; i++) {
@@ -205,7 +208,7 @@ void DArray::bubbleSort(int* arr, int n) {
 			if (arr[j] > arr[j + 1]) {
 				//swapped = true;
 				//bubbleSwap(arr, j);
-				selectionSwap(&arr[j], &arr[j + 1]);
+				swap(&arr[j], &arr[j + 1]);
 		
 			}
 		}
@@ -215,6 +218,8 @@ void DArray::bubbleSort(int* arr, int n) {
 
 void DArray::mergeSort(int* arr, const int begin, const int end) {
 
+	std::cout << "Merge sorting\n" << std::endl;
+	
 	if (begin > end) {
 		return;
 	}
@@ -223,7 +228,7 @@ void DArray::mergeSort(int* arr, const int begin, const int end) {
 	
 	mergeSort(arr, begin, middle);
 	mergeSort(arr, middle + 1, end);
-	// merge(arr, begin, middle, end);
+	merge(arr, begin, middle, end);
 	
 	
 }
@@ -233,13 +238,46 @@ void DArray::merge(int* arr, const int begin, const int middle, const int end) {
 }
 
 
-void DArray::quickSort(int* arr, int low, int high) {
-	
+void DArray::quickSort(int* arr, int begin, int end) {
+
+	std::cout << "Quick sorting \n" << std::endl;
+
+	if(begin < end) {
+
+		// pi becomes the pivot point in the partition function
+		int pi = partition(arr, begin, end);
+
+		//
+		quickSort(arr, begin, pi - 1);
+		quickSort(arr, pi + 1, end);
+		
+		
+	}
+}
+
+int DArray::partition(int* arr, int begin, int end) {
+
+	int pivot = arr[end];
+	int i = (begin - 1);
+
+	for (int j = begin; j <= end - 1; j++) {
+
+		if (arr[j] < pivot) {
+			i++;
+			swap(&arr[i], &arr[j]);
+		}
+		
+	}
+
+	swap(&arr[i + 1], &arr[end]);
+	return(i + 1);
 }
 
 
 void DArray::heapSort(int* arr, int N) {
-	
+
+	std::cout << "Heap sorting\n" << std::endl;
+
 }
 
 
@@ -276,8 +314,10 @@ int main() {
 	// linear search
 	
 	//Ayy1.selectionSort(Ayy1.arrey, Ayy1.retSize());
-	Ayy1.bubbleSort(Ayy1.arrey, Ayy1.retSize());
-	Ayy1.mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
+	//Ayy1.bubbleSort(Ayy1.arrey, Ayy1.retSize());
+	//Ayy1.mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
+	Ayy1.quickSort(Ayy1.arrey, 0, Ayy1.retSize() - 1);
+	Ayy1.heapSort(Ayy1.arrey, Ayy1.retSize());
 	
 	std::cout << "Element " << x << " is at index " << Ayy1.linearSearchArray(Ayy1.arrey, Ayy1.retSize(), x) << std::endl;
 	
