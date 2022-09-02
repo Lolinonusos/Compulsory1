@@ -1,5 +1,6 @@
 #include <iostream>
-#include "sorters.h"
+//#include "sorters.h"
+//#include "searchers.h"
 
 // Add elements to the array - done!
 // Remove elements from the array - done?
@@ -14,7 +15,7 @@
 	// Bubble Sort - functioning
 	// Merge Sort
 	// Quick Sort - functioning
-	// Heap Sort
+	// Heap Sort - functioning
 
 template <typename T>
 class DArray {
@@ -51,7 +52,7 @@ public:
 	int partition(T* arr, int begin, int end);
 	
 	void heapSort(T* arr, int N);
-
+	void heapify(T* arr, int N, int i);
 	
 	// return current size of arrey
 	int retSize();
@@ -288,6 +289,50 @@ void DArray<T>::heapSort(T* arr, int N) {
 
 	std::cout << "Heap sorting\n" << std::endl;
 
+	// Create a heap of the array
+	for (int i = N / 2 - 1; i >= 0; i--) {
+		
+		heapify(arr, N, i);
+	}
+	
+
+	// Extract elements one by one from the heap
+	for (int i = N - 1; i > 0; i--) {
+
+		//
+		swap(&arr[0], &arr[i]);
+		
+		//
+		heapify(arr, i, 0);
+	}
+	
+}
+template <typename T>
+void DArray<T>::heapify(T* arr, int N, int i) {
+
+	// Largest shall become the root of the heap
+	int largest = i;
+
+	int left = 2 * i + 1;
+
+	int right = 2 * i + 2;
+	
+	if (left < N && arr[left] > arr[largest]) {
+		largest = left;
+	}
+	
+	if (right < N && arr[right] > arr[largest]) {
+		largest = right;
+	}
+
+	// If largest is not the root of the heap
+	if (largest != i) {
+		swap(&arr[i], &arr[largest]);
+
+		heapify(arr, N, largest);
+	}
+	
+		
 }
 
 
@@ -328,7 +373,7 @@ int main() {
 	//Ayy1.selectionSort(Ayy1.arrey, Ayy1.retSize());
 	//Ayy1.bubbleSort(Ayy1.arrey, Ayy1.retSize());
 	//Ayy1.mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
-	Ayy1.quickSort(Ayy1.arrey, 0, Ayy1.retSize() - 1);
+	//Ayy1.quickSort(Ayy1.arrey, 0, Ayy1.retSize() - 1);
 	Ayy1.heapSort(Ayy1.arrey, Ayy1.retSize());
 	
 	std::cout << "Element " << x << " is at index " << Ayy1.linearSearchArray(Ayy1.arrey, Ayy1.retSize(), x) << std::endl;
