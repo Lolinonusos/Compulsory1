@@ -16,6 +16,7 @@
 	// Quick Sort - functioning
 	// Heap Sort
 
+template <typename T>
 class DArray {
 public:
 
@@ -31,31 +32,31 @@ public:
 	//int currentlyContains(); // Showcase elements currently held in array
 	
 	int index; //  
-	int* arrey; // by being a pointer it let's me put different things into it, like an array (I think)
+	T* arrey; // by being a pointer it let's me put different things into it, like an array (I think)
 
 	// Search an array of N elements, find first instance of x
-	int linearSearchArray(int* arr, int N, int x);
+	int linearSearchArray(T* arr, int N, int x);
 	void binarySearchArray(int l, int r, int x);
 
-	void swap(int* xp, int* yp);
+	void swap(T* xp, T* yp);
 
-	void selectionSort(int* arr, int n);
+	void selectionSort(T* arr, int n);
 	
-	void bubbleSort(int* arr, int n);
+	void bubbleSort(T* arr, int n);
 	
-	void mergeSort(int* arr, const int begin, const int end);
-	void merge(int* arr, const int begin, const int middle, const int end);
+	void mergeSort(T* arr, const int begin, const int end);
+	void merge(T* arr, const int begin, const int middle, const int end);
 	
-	void quickSort(int* arr, int begin, int end);
-	int partition(int* arr, int begin, int end);
+	void quickSort(T* arr, int begin, int end);
+	int partition(T* arr, int begin, int end);
 	
-	void heapSort(int* arr, int N);
+	void heapSort(T* arr, int N);
 
 	
 	// return current size of arrey
 	int retSize();
 
-	void printArrey(int* arr);
+	void printArrey(T* arr);
 	
 	~DArray();
 	
@@ -67,15 +68,17 @@ private:
 };
 
 
-DArray::DArray() {
+template <typename T>
+DArray<T>::DArray() {
 	this->capacity = 1;
 	this->arreySize = 0;
-	arrey = new int[capacity]; // puts an array into arrey
+	arrey = new T[capacity]; // puts an array into arrey
 }
 
 
 // Adds value at the end of the array
-void DArray::addValue(int value) {
+template <typename T>
+void DArray<T>::addValue(int value) {
 	if (this->arreySize < this->capacity) {
 		std::cout << "Adding value without problem\n" << std::endl;
 		this->arrey[arreySize] = value;
@@ -93,10 +96,11 @@ void DArray::addValue(int value) {
 
 
 // Expand array when it is to short
-void DArray::expand() {
+template <typename T>
+void DArray<T>::expand() {
 
 	this->capacity += 1;
-	int* temp_arrey = new int[capacity];
+	T* temp_arrey = new int[capacity];
 
 	// Copy elements form arrey to temp_arrey
 	for (size_t i = 0; i < (capacity - 1); i++)
@@ -110,7 +114,8 @@ void DArray::expand() {
 
 
 // Remove an element at a specific position
-void DArray::removeAt(int position) {
+template <typename T>
+void DArray<T>::removeAt(int position) {
 
 	
 	// Making sure we remove an element at a position that actually exists
@@ -121,7 +126,7 @@ void DArray::removeAt(int position) {
 
 	capacity -= 1;
 	arreySize -= 1;
-	int* temp_arrey = new int[capacity];
+	T* temp_arrey = new int[capacity];
 
 	//moveBack(position);
 	//arrey[position] = NULL;
@@ -143,12 +148,14 @@ void DArray::removeAt(int position) {
 
 
 // Shorten the array when unnecessary long
-void DArray::shorten() {
+template <typename T>
+void DArray<T>::shorten() {
 
 }
 
 
-int DArray::linearSearchArray(int* arr, int N, int x) {
+template <typename T>
+int DArray<T>::linearSearchArray(T* arr, int N, int x) {
 
 	for (int i = 0; i < N; i++) {
 		if (arr[i] == x) {
@@ -161,12 +168,14 @@ int DArray::linearSearchArray(int* arr, int N, int x) {
 }
 
 
-void DArray::binarySearchArray(int l, int r, int x) {
+template <typename T>
+void DArray<T>::binarySearchArray(int l, int r, int x) {
 	
 }
 
 
-void DArray::selectionSort(int* arr, int n)
+template <typename T>
+void DArray<T>::selectionSort(T* arr, int n)
 {
 
 	std::cout << "Selection sorting \n" << std::endl;
@@ -188,14 +197,16 @@ void DArray::selectionSort(int* arr, int n)
 		}
 	}
 }
-void DArray::swap(int* xp, int* yp) {
-	int temp_arrey = *xp;
+template <typename T>
+void DArray<T>::swap(T* xp, T* yp) {
+	T temp_arrey = *xp;
 	*xp = *yp;
 	*yp = temp_arrey;
 }
 
 
-void DArray::bubbleSort(int* arr, int n) {
+template <typename T>
+void DArray<T>::bubbleSort(T* arr, int n) {
 
 	std::cout << "Bubble sorting \n" << std::endl;
 	
@@ -216,7 +227,8 @@ void DArray::bubbleSort(int* arr, int n) {
 }
 
 
-void DArray::mergeSort(int* arr, const int begin, const int end) {
+template <typename T>
+void DArray<T>::mergeSort(T* arr, const int begin, const int end) {
 
 	std::cout << "Merge sorting\n" << std::endl;
 	
@@ -229,16 +241,15 @@ void DArray::mergeSort(int* arr, const int begin, const int end) {
 	mergeSort(arr, begin, middle);
 	mergeSort(arr, middle + 1, end);
 	merge(arr, begin, middle, end);
-	
+}
+template <typename T>
+void DArray<T>::merge(T* arr, const int begin, const int middle, const int end) {
 	
 }
 
-void DArray::merge(int* arr, const int begin, const int middle, const int end) {
-	
-}
 
-
-void DArray::quickSort(int* arr, int begin, int end) {
+template <typename T>
+void DArray<T>::quickSort(T* arr, int begin, int end) {
 
 	std::cout << "Quick sorting \n" << std::endl;
 
@@ -250,12 +261,10 @@ void DArray::quickSort(int* arr, int begin, int end) {
 		//
 		quickSort(arr, begin, pi - 1);
 		quickSort(arr, pi + 1, end);
-		
-		
 	}
 }
-
-int DArray::partition(int* arr, int begin, int end) {
+template <typename T>
+int DArray<T>::partition(T* arr, int begin, int end) {
 
 	int pivot = arr[end];
 	int i = (begin - 1);
@@ -274,26 +283,29 @@ int DArray::partition(int* arr, int begin, int end) {
 }
 
 
-void DArray::heapSort(int* arr, int N) {
+template <typename T>
+void DArray<T>::heapSort(T* arr, int N) {
 
 	std::cout << "Heap sorting\n" << std::endl;
 
 }
 
 
-int DArray::retSize() {
+template <typename T>
+int DArray<T>::retSize() {
 	return arreySize;
 }
 
 // Goodbye
-DArray::~DArray() {
+template <typename T>
+DArray<T>::~DArray() {
 	delete[] this->arrey;
 }
 
 
 int main() {
 
-	DArray Ayy1;
+	DArray<int> Ayy1;
 
 	// insert values
 	Ayy1.addValue(10);
