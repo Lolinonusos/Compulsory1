@@ -23,9 +23,9 @@ public:
 
 	DArray();
 	
-	void insertAt(int index, int value); // Insert somwhere specific
 	void addValue(int value); // Insert something at the end
 	void removeAt(int position); // Remove element at a specific position
+	void insertAt(int index, int value); // Insert somwhere specific
 	
 	void expand(); // Expand array
 	void shorten(); // Shrink array
@@ -127,7 +127,7 @@ void DArray<T>::removeAt(int position) {
 
 	capacity -= 1;
 	arreySize -= 1;
-	T* temp_arrey = new int[capacity];
+	T* temp_arrey = new T[capacity];
 
 	//moveBack(position);
 	//arrey[position] = NULL;
@@ -137,7 +137,7 @@ void DArray<T>::removeAt(int position) {
 		temp_arrey[i] = arrey[i];
 	}
 
-	// Move everything from position 1 space back
+	// Move everything from position one space back
 	for (int i = position; i < arreySize - 1; i++){
 		temp_arrey[i] = arrey[i + 1];
 	}
@@ -147,6 +147,77 @@ void DArray<T>::removeAt(int position) {
 	std::cout << "Element removed" << std::endl;
 }
 
+
+template <typename T>
+void DArray<T>::insertAt(int index, int value)
+{
+	// Do this if trying to insert at a position less than 0
+	if (index < 0) {
+		
+		int moves = 0;
+		
+		std::cout << "Out of array bounds, expanding" << std::endl;
+		for (int i = 0; i > index; i--) {
+			expand();
+			moves += 1;
+		}
+		arreySize += moves;
+		index = 0;
+		T* temp_arrey = new T[capacity];
+
+		for (int i = 0; i < capacity; i++) {
+			if (i == index) {
+				temp_arrey[i] = value;
+			}
+			else if(i >= moves) {
+				temp_arrey[i] = arrey[i - moves];
+			}
+			else {
+				temp_arrey[i] = NULL;
+			}
+			std::cout << temp_arrey[i] << std::endl;
+		}
+		
+		delete[] arrey;
+		arrey = temp_arrey;
+		
+	}
+	// Do this if trying to insert at a position larger than the arrays capacity
+	else if(index >= capacity) {
+		std::cout << "Out of array bounds, expanding" << std::endl;
+		int prevSize = 0;
+		
+		int prevCap = index - capacity - 1;
+		
+		for (int i = 0; i <= (prevCap + 1); i++) {
+			expand();
+			prevSize += 1;
+		}
+		
+		arreySize += prevSize;
+		T* temp_arrey = new T[capacity];
+
+		for (int i = 0; i < capacity; i++)
+		{
+			if (i == index) {
+				temp_arrey[i] = value;
+			}
+			else if (i < prevCap) {
+				temp_arrey[i] = arrey[i];
+			}
+			else {
+				temp_arrey[i] = NULL;
+			}
+		}
+		delete[] arrey;
+		arrey = temp_arrey;
+	}
+	else
+	{
+		arrey[index] = value;
+	}
+	
+}
 
 // Shorten the array when unnecessary long
 template <typename T>
@@ -176,6 +247,14 @@ void DArray<T>::binarySearchArray(int l, int r, int x) {
 
 
 template <typename T>
+void DArray<T>::swap(T* xp, T* yp) {
+	T temp_arrey = *xp;
+	*xp = *yp;
+	*yp = temp_arrey;
+}
+
+
+template <typename T>
 void DArray<T>::selectionSort(T* arr, int n)
 {
 
@@ -193,16 +272,10 @@ void DArray<T>::selectionSort(T* arr, int n)
 			}
 		}
 		// Swaps positions of elements
-		if (minIndex != i) {
 			swap(&arr[minIndex], &arr[i]);
-		}
+	//	if (minIndex != i) {
+	//	}
 	}
-}
-template <typename T>
-void DArray<T>::swap(T* xp, T* yp) {
-	T temp_arrey = *xp;
-	*xp = *yp;
-	*yp = temp_arrey;
 }
 
 
@@ -364,6 +437,8 @@ int main() {
 	Ayy1.addValue(69);
 	Ayy1.addValue(34);
 
+	Ayy1.insertAt(1, 8);
+	
 	std::cout << "\nChecking all elements: " << std::endl;
 
 	int x = 10;
@@ -374,13 +449,41 @@ int main() {
 	//Ayy1.bubbleSort(Ayy1.arrey, Ayy1.retSize());
 	//Ayy1.mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
 	//Ayy1.quickSort(Ayy1.arrey, 0, Ayy1.retSize() - 1);
-	Ayy1.heapSort(Ayy1.arrey, Ayy1.retSize());
+	//Ayy1.heapSort(Ayy1.arrey, Ayy1.retSize());
 	
 	std::cout << "Element " << x << " is at index " << Ayy1.linearSearchArray(Ayy1.arrey, Ayy1.retSize(), x) << std::endl;
 	
 	for (int i = 0; i < Ayy1.retSize(); i++) {
 		std::cout << Ayy1.arrey[i]<< std::endl;
 	}
+
+
+	// memmove() is similar to memcpy() as it also copies data from a source to destination. memmove uses a buffer first then copies the data
+	// memcpy() leads to problems when source and destination addresses overlap as memcpy() simply copies data one by one from one location to another.
+	//  memmove
 	
+	// std::cout << "memove  -- >>" << std::endl;
+	// int arr[10] = { 8,3,11,61,-22,7,-6,2,13,47 };
+	// int* new_arr = &arr[5];
+	//
+	// memmove(new_arr, arr, sizeof(int) * 5);
+	// std::cout << "new array " << std::endl;
+	// for (int i = 0; i < 5; i++)
+	// 	std::cout << new_arr[i] << std::endl;
+	// std::cout << "old array " << std::endl;
+	// for (int i = 0; i < 10; i++)
+	// 	std::cout << arr[i] << std::endl;
+	//
+	// //  memcpy
+	//
+	//
+	// char mychararray[] = "Hello world";
+	// char destArray[10];
+	//
+	// memcpy(destArray, mychararray + 6, 5*sizeof(char));
+	// memcpy(destArray+5, mychararray, 5*sizeof(char));
+	// for (int i = 0; i < 10; i++) {
+	// 	std::cout << destArray[i];
+	// }
 	return 0;
 }
