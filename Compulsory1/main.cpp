@@ -1,8 +1,10 @@
 #include <iostream>
-//#include "sorters.h"
-//#include "searchers.h"
+
+#include "sorters.h"
+#include "searchers.h"
 
 // Add elements to the array - done!
+// Insert elements and values at specific indexes - done!
 // Remove elements from the array - done?
 // Expand the array - done!
 // Shrink the array - done!
@@ -25,34 +27,14 @@ public:
 	
 	void addValue(int value); // Insert something at the end
 	void removeAt(int position); // Remove element at a specific position
-	void insertAt(int index, int value); // Insert somwhere specific
+	void insertAt(int index, int value); // Insert somewhere specific
 	
 	void expand(); // Expand array
 	void shorten(); // Shrink array
 
 	//int currentlyContains(); // Showcase elements currently held in array
 	
-	int index; //  
 	T* arrey; // by being a pointer it let's me put different things into it, like an array (I think)
-
-	// Search an array of N elements, find first instance of x
-	int linearSearchArray(T* arr, int N, int x);
-	void binarySearchArray(int l, int r, int x);
-
-	void swap(T* xp, T* yp);
-
-	void selectionSort(T* arr, int n);
-	
-	void bubbleSort(T* arr, int n);
-	
-	void mergeSort(T* arr, const int begin, const int end);
-	void merge(T* arr, const int begin, const int middle, const int end);
-	
-	void quickSort(T* arr, int begin, int end);
-	int partition(T* arr, int begin, int end);
-	
-	void heapSort(T* arr, int N);
-	void heapify(T* arr, int N, int i);
 	
 	// return current size of arrey
 	int retSize();
@@ -63,8 +45,9 @@ public:
 	
 private:
 
-	int capacity; // How long the array is, should always be 1 more than arreySize
-	int arreySize; // How many elements currently held, should always be 1 less than capacity
+	 
+	int capacity = 0; // How long the array is, should always be 1 more than arreySize
+	int arreySize = 0; // How many elements currently held, should always be 1 less than capacity
 
 };
 
@@ -104,7 +87,7 @@ void DArray<T>::expand() {
 	T* temp_arrey = new int[capacity];
 
 	// Copy elements form arrey to temp_arrey
-	for (size_t i = 0; i < (capacity - 1); i++)
+	for (int i = 0; i < (capacity - 1); i++)
 	{
 		temp_arrey[i] = arrey[i];
 	}
@@ -227,191 +210,13 @@ void DArray<T>::shorten() {
 
 
 template <typename T>
-int DArray<T>::linearSearchArray(T* arr, int N, int x) {
-
-	for (int i = 0; i < N; i++) {
-		if (arr[i] == x) {
-			// std::cout << "Element " << x << " is at index " << i << std::endl;
-			return i;
-		}
-	}
-	// std::cout << "Element " << x << " could not be found in the array" << std::endl;
-	//return;
-}
-
-
-template <typename T>
-void DArray<T>::binarySearchArray(int l, int r, int x) {
-	
-}
-
-
-template <typename T>
-void DArray<T>::swap(T* xp, T* yp) {
-	T temp_arrey = *xp;
-	*xp = *yp;
-	*yp = temp_arrey;
-}
-
-
-template <typename T>
-void DArray<T>::selectionSort(T* arr, int n)
-{
-
-	std::cout << "Selection sorting \n" << std::endl;
-
-	// Loops through the array
-	for (int i = 0; i < n-1; i++) {
-		int minIndex = i;
-		
-		// Find element of lowest value
-		for (int j = i +1; j < n; j++) {
-			// Keeps track of current lowest element
-			if (arr[j] < arr[minIndex]) {
-				minIndex = j;
-			}
-		}
-		// Swaps positions of elements
-			swap(&arr[minIndex], &arr[i]);
-	//	if (minIndex != i) {
-	//	}
-	}
-}
-
-
-template <typename T>
-void DArray<T>::bubbleSort(T* arr, int n) {
-
-	std::cout << "Bubble sorting \n" << std::endl;
-	
-	//bool swapped;
-	for(int i = 0; i < n; i++) {
-
-		//swapped = false;
-
-		for(int j = 0; j < n - i - 1; j++) {
-			if (arr[j] > arr[j + 1]) {
-				//swapped = true;
-				//bubbleSwap(arr, j);
-				swap(&arr[j], &arr[j + 1]);
-		
-			}
-		}
-	}
-}
-
-
-template <typename T>
-void DArray<T>::mergeSort(T* arr, const int begin, const int end) {
-
-	std::cout << "Merge sorting\n" << std::endl;
-	
-	if (begin > end) {
-		return;
-	}
-	
-	auto middle = (begin + end) / 2;
-	
-	mergeSort(arr, begin, middle);
-	mergeSort(arr, middle + 1, end);
-	merge(arr, begin, middle, end);
-}
-template <typename T>
-void DArray<T>::merge(T* arr, const int begin, const int middle, const int end) {
-	
-}
-
-
-template <typename T>
-void DArray<T>::quickSort(T* arr, int begin, int end) {
-
-	std::cout << "Quick sorting \n" << std::endl;
-
-	if(begin < end) {
-
-		// pi becomes the pivot point in the partition function
-		int pi = partition(arr, begin, end);
-
-		//
-		quickSort(arr, begin, pi - 1);
-		quickSort(arr, pi + 1, end);
-	}
-}
-template <typename T>
-int DArray<T>::partition(T* arr, int begin, int end) {
-
-	int pivot = arr[end];
-	int i = (begin - 1);
-
-	for (int j = begin; j <= end - 1; j++) {
-
-		if (arr[j] < pivot) {
-			i++;
-			swap(&arr[i], &arr[j]);
-		}
-		
-	}
-
-	swap(&arr[i + 1], &arr[end]);
-	return(i + 1);
-}
-
-
-template <typename T>
-void DArray<T>::heapSort(T* arr, int N) {
-
-	std::cout << "Heap sorting\n" << std::endl;
-
-	// Create a heap of the array
-	for (int i = N / 2 - 1; i >= 0; i--) {
-		
-		heapify(arr, N, i);
-	}
-	
-
-	// Extract elements one by one from the heap
-	for (int i = N - 1; i > 0; i--) {
-
-		//
-		swap(&arr[0], &arr[i]);
-		
-		//
-		heapify(arr, i, 0);
-	}
-	
-}
-template <typename T>
-void DArray<T>::heapify(T* arr, int N, int i) {
-
-	// Largest shall become the root of the heap
-	int largest = i;
-
-	int left = 2 * i + 1;
-
-	int right = 2 * i + 2;
-	
-	if (left < N && arr[left] > arr[largest]) {
-		largest = left;
-	}
-	
-	if (right < N && arr[right] > arr[largest]) {
-		largest = right;
-	}
-
-	// If largest is not the root of the heap
-	if (largest != i) {
-		swap(&arr[i], &arr[largest]);
-
-		heapify(arr, N, largest);
-	}
-	
-		
-}
-
-
-template <typename T>
 int DArray<T>::retSize() {
 	return arreySize;
+}
+
+template <typename T>
+void DArray<T>::printArrey(T* arr)
+{
 }
 
 // Goodbye
@@ -443,47 +248,21 @@ int main() {
 
 	int x = 10;
 
+	//selectionSort(Ayy1.arrey, Ayy1.retSize());
+	//bubbleSort(Ayy1.arrey, Ayy1.retSize());
+	//mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
+	//quickSort(Ayy1.arrey, 0, Ayy1.retSize() - 1);
+	heapSort(Ayy1.arrey, Ayy1.retSize());
+
+	
+	
+	
 	// linear search
-	
-	//Ayy1.selectionSort(Ayy1.arrey, Ayy1.retSize());
-	//Ayy1.bubbleSort(Ayy1.arrey, Ayy1.retSize());
-	//Ayy1.mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
-	//Ayy1.quickSort(Ayy1.arrey, 0, Ayy1.retSize() - 1);
-	//Ayy1.heapSort(Ayy1.arrey, Ayy1.retSize());
-	
-	std::cout << "Element " << x << " is at index " << Ayy1.linearSearchArray(Ayy1.arrey, Ayy1.retSize(), x) << std::endl;
+	linearSearch(Ayy1.arrey, Ayy1.retSize(), x);
 	
 	for (int i = 0; i < Ayy1.retSize(); i++) {
 		std::cout << Ayy1.arrey[i]<< std::endl;
 	}
-
-
-	// memmove() is similar to memcpy() as it also copies data from a source to destination. memmove uses a buffer first then copies the data
-	// memcpy() leads to problems when source and destination addresses overlap as memcpy() simply copies data one by one from one location to another.
-	//  memmove
 	
-	// std::cout << "memove  -- >>" << std::endl;
-	// int arr[10] = { 8,3,11,61,-22,7,-6,2,13,47 };
-	// int* new_arr = &arr[5];
-	//
-	// memmove(new_arr, arr, sizeof(int) * 5);
-	// std::cout << "new array " << std::endl;
-	// for (int i = 0; i < 5; i++)
-	// 	std::cout << new_arr[i] << std::endl;
-	// std::cout << "old array " << std::endl;
-	// for (int i = 0; i < 10; i++)
-	// 	std::cout << arr[i] << std::endl;
-	//
-	// //  memcpy
-	//
-	//
-	// char mychararray[] = "Hello world";
-	// char destArray[10];
-	//
-	// memcpy(destArray, mychararray + 6, 5*sizeof(char));
-	// memcpy(destArray+5, mychararray, 5*sizeof(char));
-	// for (int i = 0; i < 10; i++) {
-	// 	std::cout << destArray[i];
-	// }
 	return 0;
 }
