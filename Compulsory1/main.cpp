@@ -10,7 +10,8 @@
 // Shrink the array - done!
 // Search the array using a search algorithm
 	// Linear Search - functioning
-	// Binary Search
+	// Iterative Binary Search - functioning
+	// Recursive Binary Search - 
 
 // Use 4 of the sorting algorithms
 	// Selection Sort - functioning
@@ -18,6 +19,7 @@
 	// Merge Sort
 	// Quick Sort - functioning
 	// Heap Sort - functioning
+	// Introsort ?
 
 template <typename T>
 class DArray {
@@ -248,21 +250,20 @@ int main() {
 
 	int x = 10;
 
+	// Sort algorithms
 	//selectionSort(Ayy1.arrey, Ayy1.retSize());
-	//bubbleSort(Ayy1.arrey, Ayy1.retSize());
+	bubbleSort(Ayy1.arrey, Ayy1.retSize());
 	//mergeSort(Ayy1.arrey, 0, Ayy1.retSize());
 	//quickSort(Ayy1.arrey, 0, Ayy1.retSize() - 1);
-	heapSort(Ayy1.arrey, Ayy1.retSize());
-
+	//heapSort(Ayy1.arrey, Ayy1.retSize());
 	
-	
-	
-	// linear search
-	linearSearch(Ayy1.arrey, Ayy1.retSize(), x);
+	// Search algorithms
+	//linearSearch(Ayy1.arrey, Ayy1.retSize(), x);
+	binarySearchIterative(Ayy1.arrey, 0, Ayy1.retSize(), x);
+	//binarySearchRecursive(Ayy1.arrey, 0, Ayy1.retSize(), x);
 	
 	for (int i = 0; i < Ayy1.retSize(); i++) {
 		std::cout << Ayy1.arrey[i]<< std::endl;
 	}
-	
 	return 0;
 }

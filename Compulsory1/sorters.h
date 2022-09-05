@@ -25,8 +25,9 @@ void selectionSort(T* arr, int n) {
             }
         }
         // Swaps positions of elements
-        swap(&arr[minIndex], &arr[i]);
+        // Seems to work fine without if statement?
         //	if (minIndex != i) {
+        swap(&arr[minIndex], &arr[i]);
         //	}
     }
 }
@@ -35,6 +36,10 @@ void selectionSort(T* arr, int n) {
 template<typename T>
 void bubbleSort(T* arr, int n) {
 
+    // Bubble sort seems to be better for smaller arrays
+    // bools for optimization
+    
+    
     std::cout << "Bubble sorting \n" << std::endl;
 	
     //bool swapped;
@@ -45,7 +50,7 @@ void bubbleSort(T* arr, int n) {
         for(int j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
                 //swapped = true;
-                //bubbleSwap(arr, j);
+                
                 swap(&arr[j], &arr[j + 1]);
 		
             }
@@ -79,12 +84,13 @@ template <typename T>
 int partition(T* arr, int begin, int end) {
 
     int pivot = arr[end];
-    int i = (begin - 1);
+    int i = (begin - 1); // Index of smaller element and indicates the right
 
     for (int j = begin; j <= end - 1; j++) {
 
+        // Element is smaller than pivot
         if (arr[j] < pivot) {
-            i++;
+            i++; // Increment index of smaller element
             swap(&arr[i], &arr[j]);
         }
 		
@@ -103,7 +109,7 @@ void quickSort(T* arr, int begin, int end) {
         // pi becomes the pivot point in the partition function
         int pi = partition(arr, begin, end);
 
-        //
+        // Separately sort elements before and after partition
         quickSort(arr, begin, pi - 1);
         quickSort(arr, pi + 1, end);
     }
@@ -119,11 +125,13 @@ void heapify(T* arr, int N, int i) {
     int left = 2 * i + 1;
 
     int right = 2 * i + 2;
-	
+
+    // If left child is larger than root
     if (left < N && arr[left] > arr[largest]) {
         largest = left;
     }
-	
+
+    // If right child is larger than root
     if (right < N && arr[right] > arr[largest]) {
         largest = right;
     }
@@ -132,6 +140,7 @@ void heapify(T* arr, int N, int i) {
     if (largest != i) {
         swap(&arr[i], &arr[largest]);
 
+        // Recursively heapify the affected sub tree
         heapify(arr, N, largest);
     }
 }
@@ -142,7 +151,6 @@ void heapSort(T* arr, int N) {
 
     // Create a heap of the array
     for (int i = N / 2 - 1; i >= 0; i--) {
-		
         heapify(arr, N, i);
     }
 	
@@ -150,13 +158,12 @@ void heapSort(T* arr, int N) {
     // Extract elements one by one from the heap
     for (int i = N - 1; i > 0; i--) {
 
-        //
+        // Swaps highest value towards the root
         swap(&arr[0], &arr[i]);
 		
-        //
+        // Call max heapify on reduced heap
         heapify(arr, i, 0);
     }
-	
 }
 
 
