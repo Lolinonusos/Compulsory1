@@ -68,14 +68,14 @@ void DArray<T>::addValue(int value) {
 	if (this->arreySize < this->capacity) {
 		std::cout << "Adding value without problem\n" << std::endl;
 		this->arrey[arreySize] = value;
-		std::cout << this->arrey[arreySize] << std::endl;
+		std::cout << "Added: " << this->arrey[arreySize] << std::endl;
 		arreySize += 1;
 	}
 	else { // Array is full, expand it
 		std::cout << "Expanding\n" << std::endl;
 		this->expand();
 		this->arrey[arreySize] = value;
-		std::cout << this->arrey[arreySize] << std::endl;
+		std::cout << "Added: " << this->arrey[arreySize] << std::endl;
 		arreySize += 1;
 	}
 }
@@ -102,7 +102,6 @@ void DArray<T>::expand() {
 // Remove an element at a specific position
 template <typename T>
 void DArray<T>::removeAt(int position) {
-
 	
 	// Making sure we remove an element at a position that actually exists
 	if (position < 0 || position >= capacity) {
@@ -134,8 +133,7 @@ void DArray<T>::removeAt(int position) {
 
 
 template <typename T>
-void DArray<T>::insertAt(int index, int value)
-{
+void DArray<T>::insertAt(int index, int value) {
 	// Do this if trying to insert at a position less than 0
 	if (index < 0) {
 		
@@ -217,8 +215,10 @@ int DArray<T>::retSize() {
 }
 
 template <typename T>
-void DArray<T>::printArrey(T* arr)
-{
+void DArray<T>::printArrey(T* arr) {
+	for (int i = 0; i < retSize(); i++) {
+		std::cout << arrey[i]<< std::endl;
+	}
 }
 
 // Goodbye
@@ -228,10 +228,74 @@ DArray<T>::~DArray() {
 }
 
 
+void selectSearchMethod() {
+	
+}
+
+
+void selectSortMethod() {
+	
+}
+
+
 int main() {
 
 	DArray<int> Ayy1;
 
+	int choice = 0;
+	
+	while (choice != 7) {
+		
+		int add = 0;
+		int indIns = 0;
+		int valIns = 0;
+		int indRem = 0;
+		
+		std::cout << "1: Add value to array" << std::endl;
+		std::cout << "2: Insert value at user chosen index" << std::endl;
+		std::cout << "3: Remove a user chosen index" << std::endl;
+		std::cout << "4: Print array" << std::endl;
+		std::cout << "5: Search array for value" << std::endl;
+		std::cout << "6: Sort array" << std::endl;
+		std::cout << "7: Automatic (will exit program)" << std::endl;
+		std::cout << "8: Exit" << std::endl;
+			
+		std::cin >> choice;
+		
+		switch (choice) {
+		case 1:
+			std::cin >> add;
+			Ayy1.addValue(add);
+			break;
+		case 2:
+			std::cout << "Insert value: ";
+			std::cin >> valIns;
+			std::cout << "Insert index: ";
+			std::cin >> indIns;
+			Ayy1.insertAt(indIns, valIns);
+			break;
+		case 3:
+			std::cout << "insert index to remove: ";
+			std::cin >> indRem;
+			Ayy1.removeAt(indRem);
+			break;
+		case 4:
+			Ayy1.printArrey(Ayy1.arrey);
+			break;
+		case 5:
+			selectSearchMethod();
+			break;
+		case 6:
+			selectSortMethod();
+			break;
+		case 7:
+			std::cout << "Running automatic process\n" << std::endl;
+			break;
+		case 8:
+			return 0;
+		};
+		
+	}
 	// insert values
 	Ayy1.addValue(10);
 	Ayy1.addValue(7);
@@ -258,12 +322,13 @@ int main() {
 	//heapSort(Ayy1.arrey, Ayy1.retSize());
 	
 	// Search algorithms
-	//linearSearch(Ayy1.arrey, Ayy1.retSize(), x);
-	binarySearchIterative(Ayy1.arrey, 0, Ayy1.retSize(), x);
-	//binarySearchRecursive(Ayy1.arrey, 0, Ayy1.retSize(), x);
+	linearSearch(Ayy1.arrey, Ayy1.retSize(), x);
+	//binarySearchIterative(Ayy1.arrey, 0, Ayy1.retSize(), x);
+	//binarySearchRecursive(Ayy1.arrey, 0, Ayy1.retSize(), x); // not working correctly right now
 	
-	for (int i = 0; i < Ayy1.retSize(); i++) {
-		std::cout << Ayy1.arrey[i]<< std::endl;
-	}
+	Ayy1.printArrey(Ayy1.arrey);
+
+	std::cout << "Automatic process finished.";
+	
 	return 0;
 }
